@@ -1,0 +1,6 @@
+body { background: #121212; }
+h1 { color: #EEE }
+p { color: #888 }
+h2.daysep { margin-top:0.8em; font-family: "Segoe Script", "Comic Sans MS", "Calkboard"; color: #aaa }
+.calender { width:100%; }
+.incomplete { opacity: 0.2 }

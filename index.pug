@@ -1,0 +1,34 @@
+doctype
+html
+  head
+    title TURRET 183
+    meta(charset="utf-8")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi",crossorigin="anonymous")
+    link(rel="stylesheet", href="index.css")
+    meta(name="twitter:card", content="summary_large_image")
+    meta(name="twitter:site", content="@retorillo")
+    meta(name="twitter:creator" content="@retorillo")
+    meta(name="twitter:title" content="TURRET 183")
+    meta(name="twitter:description" content="天津風に183体のちっちゃな連装砲くんたちを載せていきます")
+    meta(name="twitter:image" content="img/card.jpg")
+  body
+    div(class="container")
+      div(class="row")
+        div(class="col-xs-12")
+          h1 TURRET 183
+          p 天津風に184体のちっちゃな連装砲くんたちを載せていく企画の進捗確認ページです。連装砲くん84体、連装砲ちゃん大中小それぞれ17体、秋月型それぞれ16体に載せていきます！大晦日までの完成を予定しています。
+          a(class="btn btn-outline-secondary", target="_blank", href="https://twitter.com/retorillo/status/754573748318023680") ご投票の集計結果
+      div(class="row")
+        each i in calender
+          if i.daysep
+            div(class="col-xs-12")
+              h2(class="daysep")=i.month + "/" + i.day
+          else
+            div(class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2")
+              if i.incomplete 
+                img(src=i.img, class="calender incomplete")
+              else
+                img(src=i.img, class="calender")
+      div(class="row")
+        div(class="col-xs-12 text-xs-right")
+          p &copy; 2016 Retorillo
