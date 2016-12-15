@@ -12,7 +12,7 @@ var ingenc = "utf-8";
 var outenc = ingenc;
 var since = new Date("2016/12/13");
 var perday = 10;
-var complete = 1;
+var complete = 10;
 
 var argv = gnuopt.parse(gnuoptmap);
 
@@ -31,7 +31,7 @@ function cook() {
 
   ing.forEach((i, c) => {
     if (c % perday == 0) {
-      model.calender.push({ 
+      model.calender.push({
         daysep: true,
         month: day.getMonth() + 1,
         day: day.getDate(),
@@ -46,6 +46,6 @@ function cook() {
       progress: Math.round((c + 1) / ing.length * 100),
     })
   });
-  
+
   fs.writeFileSync(outpath, cooker(model), { encoding: outenc })
 }
