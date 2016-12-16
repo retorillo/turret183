@@ -12,7 +12,10 @@ var ingenc = "utf-8";
 var outenc = ingenc;
 var since = new Date("2016/12/13");
 var perday = 10;
-var complete = 10;
+var completeMap = require('./complete.json');
+var complete = 0;
+for (var c in completeMap)
+  complete += completeMap[c];
 
 var argv = gnuopt.parse(gnuoptmap);
 
@@ -24,11 +27,10 @@ function ingredient() {
 }
 
 function cook() {
-  var cooker = pug.compileFile(pugpath);
+  var cooker = pug.compileFile(pugpath, { pretty: '  ', });
   var ing = fs.readFileSync(ingpath, { encoding: ingenc }).split(ingsep);
   var day = since;
   var model = { calender: [] };
-
   ing.forEach((i, c) => {
     if (c % perday == 0) {
       model.calender.push({
@@ -41,11 +43,11 @@ function cook() {
     model.calender.push({
       index: c,
       incomplete: complete <= c,
+      pending: complete == c,
       img: `img/${i}.png`,
       day: day,
       progress: Math.round((c + 1) / ing.length * 100),
     })
   });
-
   fs.writeFileSync(outpath, cooker(model), { encoding: outenc })
 }

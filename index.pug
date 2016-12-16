@@ -11,12 +11,20 @@ html
     meta(name="twitter:title" content="TURRET 183")
     meta(name="twitter:description" content="天津風に183体のちっちゃな連装砲くんたちを載せていきます")
     meta(name="twitter:image" content="https://retorillo.github.io/turret183/img/card.jpg")
+    script(type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js")
+    script(type="text/javascript").
+      $(function() {
+        $('html, body').animate({ 
+          scrollTop: $('.pending').offset().top
+            - Math.round($(window).height() / 2),
+        }, 1000);
+      });
   body
     div(class="container")
       div(class="row")
         div(class="col-xs-12")
           h1 TURRET 183
-          p 天津風に184体のちっちゃな連装砲くんたちを載せていく企画の進捗確認ページです。連装砲くん84体、連装砲ちゃん大中小それぞれ17体、秋月型それぞれ16体に載せていきます！大晦日までの完成を予定しています。
+          p 天津風に183体のちっちゃな連装砲くんたちを載せていく企画の進捗確認ページです。連装砲くん84体、連装砲ちゃん大中小それぞれ17体、秋月型それぞれ16体に載せていきます！大晦日までの完成を予定しています。
           a(class="btn btn-outline-secondary", target="_blank", href="https://twitter.com/retorillo/status/754573748318023680") ご投票の集計結果
       div(class="row")
         each i in calender
@@ -24,8 +32,11 @@ html
             div(class="col-xs-12")
               h2(class="daysep")=i.month + "/" + i.day
           else
+            a(name=i.index)
             div(class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2")
-              if i.incomplete 
+              if i.pending
+                img(src=i.img, class="calender pending")
+              else if i.incomplete 
                 img(src=i.img, class="calender incomplete")
               else
                 img(src=i.img, class="calender")
