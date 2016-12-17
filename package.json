@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "cook": "node ./cli.js --cook"
+  },
   "devDependencies": {
     "gnu-option": "^1.0.0",
     "maq": "^1.0.1",

@@ -11,6 +11,18 @@ h2.daysep { margin-top:0.8em;
   0% { opacity: 0.1 }
   100% { opacity: 0.4 }
 }
+@-ms-keyframes blink {
+  0% { opacity: 0.1 }
+  100% { opacity: 0.4 }
+}
+@-webkit-keyframes blink {
+  0% { opacity: 0.1 }
+  100% { opacity: 0.4 }
+}
+@-o-keyframes blink {
+  0% { opacity: 0.1 }
+  100% { opacity: 0.4 }
+}
 @keyframes blink {
   0% { opacity: 0.1 }
   100% { opacity: 0.4 }
@@ -20,6 +32,19 @@ h2.daysep { margin-top:0.8em;
 
 .pending {
   -moz-animation: blink 500ms infinite both alternate;
+  -ms-animation: blink 500ms infinite both alternate;
+  -webkit-animation: blink 500ms infinite both alternate;
+  -o-animation: blink 500ms infinite both alternate;
   animation: blink 500ms infinite both alternate;
 }
 
+
+#loader {
+  position: fixed;
+  top: 45%;
+  -moz-animation: blink 500ms infinite both alternate;
+  -ms-animation: blink 500ms infinite both alternate;
+  -webkit-animation: blink 500ms infinite both alternate;
+  -o-animation: blink 500ms infinite both alternate;
+  animation: blink 500ms infinite both alternate;
+}

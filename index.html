@@ -12,17 +12,17 @@
     <meta name="twitter:description" content="天津風に183体のちっちゃな連装砲くんたちを載せていきます">
     <meta name="twitter:image" content="https://retorillo.github.io/turret183/img/card.jpg">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript">
-      $(function() {
-        $('html, body').animate({ 
-          scrollTop: $('.pending').offset().top
-            - Math.round($(window).height() / 2),
-        }, 1000);
-      });
-    </script>
+    <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="loader">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 id="loadertext"></h1>
+        </div>
+      </div>
+    </div>
+    <div class="container" id="content">
       <div class="row">
         <div class="col-xs-12">
           <h1>TURRET 183</h1>
