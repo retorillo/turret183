@@ -28,6 +28,14 @@ h2.daysep { margin-top:0.8em;
   100% { opacity: 0.4 }
 }
 .calender { width:100%; }
+.checked { 
+  opacity: 0.8 !important; 
+  -webkit-filter: drop-shadow(0px 0px 10px red);
+  -ms-filter: drop-shadow(0px 0px 10px red);
+  -moz-filter: drop-shadow(0px 0px 10px red);
+  -o-filter: drop-shadow(0px 0px 10px red);
+  filter: drop-shadow(0px 0px 10px red);
+}
 .incomplete { opacity: 0.2 }
 
 .pending {

@@ -21,6 +21,20 @@ $(function() {
         scrollTop: $('.pending').offset().top
           - Math.round($(window).height() / 2),
       }, autoScrollDuration);
+
+      $(".calender").each(function() {
+        var e = $(this);
+        if (!e.hasClass("incomplete") && !e.hasClass("pending"))
+          return;
+        e.click(function() {
+          var c = "checked";
+          var e = $(this);
+          if (e.hasClass(c))
+            e.removeClass(c);
+          else
+            e.addClass(c);
+        });
+      });
     }
   }, 100);
 
