@@ -1,7 +1,7 @@
 var maq = require('maq');
 var pug = require('pug');
 var gnuopt = require('gnu-option');
-var gnuoptmap = { ingredient: "switch", "cook": "switch" }
+var gnuoptmap = { ingredient: "switch", cook: "switch" }
 var fs = require('fs');
 var recipe = { am:84, sl:17, sm:17, ss:17, ak:16, te:16, ha:16 };
 var pugpath = "index.pug";
@@ -16,6 +16,11 @@ var completeMap = require('./complete.json');
 var complete = 0;
 for (var c in completeMap)
   complete += completeMap[c];
+var incomplete = -complete;
+for (var c in recipe)
+  incomplete += recipe[c];
+
+var dayms = 24 * 60 * 60 * 1000;
 
 var argv = gnuopt.parse(gnuoptmap);
 
@@ -38,7 +43,7 @@ function cook() {
         month: day.getMonth() + 1,
         day: day.getDate(),
       });
-      day = new Date(day.getTime() + 24 * 60 * 60 * 1000)
+      day = new Date(day.getTime() + dayms)
     }
     model.calender.push({
       index: c,
@@ -48,6 +53,12 @@ function cook() {
       day: day,
       progress: Math.round((c + 1) / ing.length * 100),
     })
+  });
+  model.status = JSON.stringify({
+    start: since.getTime(),
+    end: day.getTime(),
+    incomplete: incomplete,
+    complete: complete,
   });
   fs.writeFileSync(outpath, cooker(model), { encoding: outenc })
 }

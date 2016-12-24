@@ -7,6 +7,12 @@ h2.daysep { margin-top:0.8em;
     "Calkboard"; 
   color: #aaa
 }
+h4 {
+  color: #EEE;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 @-moz-keyframes blink {
   0% { opacity: 0.1 }
   100% { opacity: 0.4 }
@@ -56,3 +62,16 @@ h2.daysep { margin-top:0.8em;
   -o-animation: blink 500ms infinite both alternate;
   animation: blink 500ms infinite both alternate;
 }
+#flyout {
+  z-index: 1;
+  opacity: 0.8;
+  bottom: 0px;
+  width: 100%;
+  position: fixed;
+  background: #252525;
+}
+#flyout .container{
+  margin-left: auto;
+  margin-right: auto;
+}
+
