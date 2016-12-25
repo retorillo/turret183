@@ -6,36 +6,65 @@ var startTime = new Date().getTime();
 var flyout;
 $(document.body).hide();
 
-function initFlyoutColumn(xs, barcolor) {
-  var c = $("<div>").attr("class", "col-xs-" + xs);
+function initFlyoutContainer() {
+  return $("<div>").attr("class", "container");
+}
+function initFlyoutRow() {
+  return $("<div>").attr("class", "row");
+}
+function initFlyoutColumn(xs) {
+  return $("<div>").attr("class", "col-xs-" + xs);
+}
+function initFlyoutTextColumn(xs) {
+  var c = initFlyoutColumn(xs);
+  var l = $("<p>").appendTo(c);
+  c.data("set", function(text) {
+    l.text(text);
+  });
+  return c;
+}
+function initFlyoutProgressBarColumn(xs, barcolor) {
+  var c = initFlyoutColumn(xs);
   var l = $("<h4>").appendTo(c);
   var p = $("<progress>").attr("class", "progress progress-" + barcolor)
     .attr("max", "100").appendTo(c);
-  c.data("l", l);
-  c.data("p", p);
+  c.data("set", function(val, text) {
+    l.text(text);
+    p.val(Math.round(val));
+  });
   return c;
 }
 function initFlyout() {
   flyout = $("#flyout");
   var status = JSON.parse(flyout.attr("data-status"));
-  var container = $("<div>").attr("class", "container").appendTo(flyout);
-  var colp = initFlyoutColumn(6, "danger").appendTo(container);
-  var cols = initFlyoutColumn(6, "danger").appendTo(container);
+  var container = initFlyoutContainer().appendTo(flyout);
+  var row = initFlyoutRow().appendTo(container);
+  var colp = initFlyoutProgressBarColumn(6, "danger").appendTo(row);
+  var cols = initFlyoutProgressBarColumn(6, "danger").appendTo(row);
+  var colt = initFlyoutTextColumn(12).appendTo(row);
 
   var update = function() {
     var total = status.incomplete + status.complete;
-    var selected = $(".checked").length;
-    var progress = status.complete * 100 / total;
-    var diff = selected * 100 / total;
-    colp.data("l").text("Goal: " + Math.round(progress) + "%" 
-      + " + " + Math.round(diff) + "%")
-    colp.data("p").val(Math.round(progress));
+    var checked = $(".checked").length;
+
+    var goal = status.complete * 100 / total;
+    var diff = checked * 100 / total;
+    var goaltext = "Goal: " + Math.round(goal) + "%"
+      + " + " + Math.round(diff) + "%";
+    colp.data("set")(goal, goaltext);
 
     var leftTime = status.end - new Date().getTime();
     var leftDays = leftTime / (24 * 60 * 60 * 1000);
-    var should = status.incomplete / Math.max(1, leftDays);
-    cols.data("l").text("Quota: " + selected + " of " + Math.round(should));
-    cols.data("p").val(Math.min(100, Math.floor(selected * 100 / should)));
+    var quota = status.incomplete / Math.max(1, leftDays);
+    var quotatext = "Quota: " + checked + " of " + Math.round(quota);
+    var quotaval = Math.min(100, Math.floor(checked * 100 / quota));
+    cols.data("set")(quotaval, quotatext);
+
+    var futureQuota = (status.incomplete - checked) / Math.max(1, leftDays - 1);
+
+    colt.data("set")(
+      "Done: " + (status.complete + checked) + " of " + total
+      + " / Future quota: " + Math.round(futureQuota * 100) / 100 + " per day");
   }
   flyout.data("update", update);
   update();
