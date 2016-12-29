@@ -56,15 +56,22 @@ function initFlyout() {
     var leftTime = status.end - new Date().getTime();
     var leftDays = leftTime / (24 * 60 * 60 * 1000);
     var quota = status.incomplete / Math.max(1, leftDays);
-    var quotatext = "Quota: " + checked + " of " + Math.round(quota);
-    var quotaval = Math.min(100, Math.floor(checked * 100 / quota));
-    cols.data("set")(quotaval, quotatext);
 
-    var futureQuota = (status.incomplete - checked) / Math.max(1, leftDays - 1);
+    if (quota == 0) {
+      cols.hide();
+      colt.hide();
+      colp.attr("class", "col-xs-12");
+    }
+    else {
+      var quotatext = "Quota: " + checked + " of " + Math.round(quota);
+      var quotaval = quota == 0 ? 0 : Math.min(100, Math.floor(checked * 100 / quota));
+      cols.data("set")(quotaval, quotatext);
 
-    colt.data("set")(
-      "Done: " + (status.complete + checked) + " of " + total
-      + " / Future quota: " + Math.round(futureQuota * 100) / 100 + " per day");
+      var futureQuota = (status.incomplete - checked) / Math.max(1, leftDays - 1);
+      colt.data("set")(
+        "Done: " + (status.complete + checked) + " of " + total
+        + " / Future quota: " + Math.round(futureQuota * 100) / 100 + " per day");
+    }
   }
   flyout.data("update", update);
   update();
@@ -85,12 +92,21 @@ $(function() {
       .css('opacity', 0).animate({
       opacity: 1.0,
     }, entranceDuration);
+
+    var scrollTo;
+    var pendings = $('.pending');
+    var all = $('.calender');
+    if (pendings.length == 0)
+      scrollTo = all.get(all.length - 1);
+    else
+      scrollTo = pendings.get(pendings.length - 1);
+
     $('html, body').animate({
-      scrollTop: $('.pending').offset().top
+      scrollTop: $(scrollTo).offset().top
         - Math.round($(window).height() / 2),
     }, autoScrollDuration);
 
-    $(".calender").each(function() {
+    all.each(function() {
       var e = $(this);
       if (!e.hasClass("incomplete") && !e.hasClass("pending"))
         return;
